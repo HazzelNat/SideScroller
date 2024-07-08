@@ -1,5 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class playerController : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class playerController : MonoBehaviour
     bool jump = false;
     bool crouch = false;
 
-	[SerializeField] private float JumpForce = 400f;
+	[SerializeField] private float JumpForce = 500f;
 	[Range(0, 1)] [SerializeField] private float CrouchSpeed = .36f;
 	[Range(1, 2)] [SerializeField] private float CrouchJumpForce = 1f;
 	[Range(0, .3f)] [SerializeField] private float MovementSmoothing = .05f;
@@ -18,23 +19,15 @@ public class playerController : MonoBehaviour
 	[SerializeField] private Transform m_CeilingCheck;
 	[SerializeField] private Collider2D m_CrouchDisableCollider;
 
+	[Header("Checks")]
 	const float k_GroundedRadius = .2f;
 	private bool Grounded;
 	const float k_CeilingRadius = .2f;
 	private Rigidbody2D rb2d;
 	private bool FacingRight = true;
 	private Vector3 Velocity = Vector3.zero;
-
-	[Header("Events")]
-	[Space]
-
-	public UnityEvent OnLandEvent;
-
-	[System.Serializable]
-	public class BoolEvent : UnityEvent<bool> { }
-
-	public BoolEvent OnCrouchEvent;
 	private bool m_wasCrouching = false;
+	public bool isDead = false;
 
 	[Header("Animation")]
 	private Animator animator;
@@ -49,61 +42,51 @@ public class playerController : MonoBehaviour
 	{
 		rb2d = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
-
-		if (OnLandEvent == null)
-			OnLandEvent = new UnityEvent();
-
-		if (OnCrouchEvent == null)
-			OnCrouchEvent = new BoolEvent();
 	}
 
 	void Update()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal") * horizontalSpeed;
+		if (!isDead){
+			horizontalInput = Input.GetAxisRaw("Horizontal") * horizontalSpeed;
 
-        if (Input.GetButtonDown("Crouch"))
-        {
-            crouch = true;
-        } 
-
-        else if (Input.GetButtonUp("Crouch"))
-        {
-            crouch = false;
-        }
-
-        if (Input.GetButtonDown("Jump"))
-        {
-            jump = true;
-        }
-
-		if (Grounded && horizontalInput == 0 && !crouch && !jump)
-		{
-			ChangeAnimationState(playerIdle);
-		}
-
-		if (!crouch)
-		{
-			if (horizontalInput == 0)
+			if (Input.GetButtonDown("Crouch"))
 			{
-				ChangeAnimationState(playerIdle);
-			}
-			else 
+				crouch = true;
+			} 
+
+			else if (Input.GetButtonUp("Crouch"))
 			{
-				ChangeAnimationState(playerRun);
+				crouch = false;
 			}
-		} 
-		else
-		{
-			if (horizontalInput == 0)
+
+			if (Input.GetButtonDown("Jump"))
 			{
-				ChangeAnimationState(playerCrouch);
+				jump = true;
 			}
-			else 
+
+			if (!crouch && Grounded)
 			{
-				ChangeAnimationState(playerCrouchWalk);
+				if (horizontalInput == 0)
+				{
+					ChangeAnimationState(playerIdle);
+				}
+				else 
+				{
+					ChangeAnimationState(playerRun);
+				}
+			} 
+			else if (Grounded && crouch)
+			{
+				if (horizontalInput == 0)
+				{
+					ChangeAnimationState(playerCrouch);
+				}
+				else 
+				{
+					ChangeAnimationState(playerCrouchWalk);
+				}
 			}
-		}
-		
+		}		
     }
 
 	private void FixedUpdate()
@@ -121,8 +104,6 @@ public class playerController : MonoBehaviour
 			if (colliders[i].gameObject != gameObject)
 			{
 				Grounded = true;
-				if (!wasGrounded)
-					OnLandEvent.Invoke();
 			}
 		}
 	}
@@ -144,7 +125,6 @@ public class playerController : MonoBehaviour
 				if (!m_wasCrouching)
 				{
 					m_wasCrouching = true;
-					OnCrouchEvent.Invoke(true);
 				}
 
 				move *= CrouchSpeed;
@@ -165,7 +145,6 @@ public class playerController : MonoBehaviour
 				if (m_wasCrouching)
 				{
 					m_wasCrouching = false;
-					OnCrouchEvent.Invoke(false);
 				}
 			}
 

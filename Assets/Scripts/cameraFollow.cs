@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,10 +11,12 @@ public class CameraFollow : MonoBehaviour
     
     private void FixedUpdate() 
     {
-        Vector3 targetPosition = target.position + offset;
+        if (target != null){
+            Vector3 targetPosition = target.position + offset;
 
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, targetPosition, MovementSmoothing);
+            Vector3 smoothedPosition = Vector3.Lerp(transform.position, targetPosition, MovementSmoothing);
 
-        transform.position = new Vector3(smoothedPosition.x, transform.position.y, transform.position.z);
+            transform.position = new Vector3(smoothedPosition.x, transform.position.y, transform.position.z);
+        }
     }
 }

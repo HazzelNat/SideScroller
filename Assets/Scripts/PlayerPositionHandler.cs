@@ -30,11 +30,12 @@ public class PlayerPositionHandler : MonoBehaviour
     }
 
     //berguna ketika Player menabrak garis Finish
-    public void OnFinish()
-    {
+    public void OnFinish(){
         playerPositionData.ResetData();
-
+        GameManager.Instance.ChangeLevel(1);
+        GameManager.Instance.ChangeScene("Main Menu");
     }
+
 		//1. berguna untuk mengubah posisi player
     private void ChangePlayerPosition(Vector2 newPosition)
     {

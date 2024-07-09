@@ -8,6 +8,7 @@ public class PlayerPositionHandler : MonoBehaviour
     [SerializeField] Vector2 currentCheckpointPosition;
     public TransformData playerPositionData;
     private TriggerEvent playerTriggerEvent;
+    public GameManager GameManager;
 
     void Start()
     {
@@ -32,8 +33,7 @@ public class PlayerPositionHandler : MonoBehaviour
     //berguna ketika Player menabrak garis Finish
     public void OnFinish(){
         playerPositionData.ResetData();
-        GameManager.Instance.ChangeLevel(1);
-        GameManager.Instance.ChangeScene("Main Menu");
+        GameManager.LevelFinishIncrement();
     }
 
 		//1. berguna untuk mengubah posisi player
@@ -41,11 +41,13 @@ public class PlayerPositionHandler : MonoBehaviour
     {
         transform.position = newPosition;
     }
+
 		//berguna untuk Load Position dari Scriptable object
     private void LoadPosition()
     {
         playerCurrentPosition = playerPositionData.position;
     }
+
 		//berguna untuk Save Position ke Scriptable Object
     private void SavePosition(Vector2 newPosition)
     {

@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 7995348438519301462}
   - component: {fileID: 6292639217089248809}
   - component: {fileID: 8467051093962668431}
-  - component: {fileID: 5057878373270173132}
   - component: {fileID: 6199841841624612417}
   - component: {fileID: 5102942837402721850}
   - component: {fileID: 6383701666005539570}
   - component: {fileID: 437493762212935220}
   - component: {fileID: 2586281325959777389}
+  - component: {fileID: 3808611479641835710}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -188,31 +188,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &5057878373270173132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 619345616807378677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abb0cfdccbc0d814aaed061c16874095, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  horizontalSpeed: 27
-  JumpForce: 500
-  CrouchSpeed: 0.36
-  CrouchJumpForce: 1.464
-  MovementSmoothing: 0.05
-  AirControl: 1
-  m_WhatIsGround:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_GroundCheck: {fileID: 3158699793774733769}
-  m_CeilingCheck: {fileID: 9055423917189021390}
-  m_CrouchDisableCollider: {fileID: 6292639217089248809}
-  isDead: 0
 --- !u!70 &6199841841624612417
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -263,6 +238,7 @@ MonoBehaviour:
   playerCurrentPosition: {x: 0, y: 0}
   currentCheckpointPosition: {x: 0, y: 0}
   playerPositionData: {fileID: 11400000, guid: b4f89021fdad12c4ea449101e06651e6, type: 2}
+  GameManager: {fileID: 0}
 --- !u!114 &6383701666005539570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,6 +323,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3808611479641835710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619345616807378677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abb0cfdccbc0d814aaed061c16874095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontalSpeed: 27
+  crouch: 0
+  JumpForce: 500
+  CrouchSpeed: 0.36
+  CrouchJumpForce: 1.464
+  MovementSmoothing: 0.05
+  AirControl: 1
+  m_WhatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
+  m_GroundCheck: {fileID: 3158699793774733769}
+  m_CeilingCheck: {fileID: 9055423917189021390}
+  m_CrouchDisableCollider: {fileID: 6292639217089248809}
+  m_wasCrouching: 0
+  forcedCrouch: 0
 --- !u!1 &2246986647744745398
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,7 +375,7 @@ Transform:
   m_GameObject: {fileID: 2246986647744745398}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.009, y: 0.037, z: 0}
+  m_LocalPosition: {x: 0.011, y: 0.186, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

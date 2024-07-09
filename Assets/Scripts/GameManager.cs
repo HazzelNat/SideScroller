@@ -10,15 +10,27 @@ public class GameManager : MonoBehaviour
 
     private void Start() {
         Time.timeScale = 1;
+        LoadLevel();
+
+        Scene scene = SceneManager.GetActiveScene();
+        
+        if (scene.name == "Main Menu"){
+            ResetLevel();
+        }
     }
 
     public void ChangeScene(string sceneName){
         SceneManager.LoadScene(sceneName);
-        Debug.Log("CLOCK");
+    }
+
+    public void PlayLevel(){
+        Debug.Log(levelCurrent);
+        string LevelName = "Level " + levelCurrent.ToString();
+        ChangeScene(LevelName);
     }
 
     LevelData levelData;
-    public int levelCurrent;
+    int levelCurrent = 1;
 
     //berguna untuk Check Save File ada atau tidak
     public void CheckSaveFile()
@@ -45,13 +57,6 @@ public class GameManager : MonoBehaviour
         levelCurrent = levelData.level;
     }
 
-    //berguna untuk Load Level dan assign ke game manager
-    private void CheckLevel()
-    {
-        LoadLevel();
-        levelCurrent = levelData.level;
-    }
-
 		//berguna untuk mengganti nilai level / assign level
     public void ChangeLevel(int newLevelUnlocked)
     {
@@ -62,7 +67,21 @@ public class GameManager : MonoBehaviour
 		//berguna untuk reset level
     public void ResetLevel()
     {
-        levelCurrent = 0;
+        levelCurrent = 1;
         SaveLevel();
+    }
+
+    public void LevelFinishIncrement(){
+        levelCurrent += 1;
+        ChangeLevel(levelCurrent);
+
+        Debug.Log(levelCurrent);
+        
+        if (levelCurrent == 3){
+            ChangeScene("Main Menu");
+            
+        } else {
+            PlayLevel();
+        }
     }
 }

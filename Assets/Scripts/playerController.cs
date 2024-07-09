@@ -1,33 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class playerController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
 	[SerializeField] float horizontalSpeed;
     float horizontalInput;
     bool jump = false;
-    bool crouch = false;
+    public bool crouch = false;
 
 	[SerializeField] private float JumpForce = 500f;
 	[Range(0, 1)] [SerializeField] private float CrouchSpeed = .36f;
 	[Range(1, 2)] [SerializeField] private float CrouchJumpForce = 1f;
 	[Range(0, .3f)] [SerializeField] private float MovementSmoothing = .05f;
 	[SerializeField] private bool AirControl = false;
+	
+
+	[Header("Checks")]
 	[SerializeField] private LayerMask m_WhatIsGround;
 	[SerializeField] private Transform m_GroundCheck;
 	[SerializeField] private Transform m_CeilingCheck;
 	[SerializeField] private Collider2D m_CrouchDisableCollider;
-
-	[Header("Checks")]
 	const float k_GroundedRadius = .2f;
 	private bool Grounded;
-	const float k_CeilingRadius = .2f;
+	const float k_CeilingRadius = .00001f;
 	private Rigidbody2D rb2d;
 	private bool FacingRight = true;
 	private Vector3 Velocity = Vector3.zero;
-	private bool m_wasCrouching = false;
-	public bool isDead = false;
+	public bool m_wasCrouching = false;
+	private bool isDead = false;
+	public bool forcedCrouch = false;
+
 
 	[Header("Animation")]
 	private Animator animator;
@@ -42,6 +46,7 @@ public class playerController : MonoBehaviour
 	{
 		rb2d = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
+		animator.Rebind();
 	}
 
 	void Update()
@@ -54,7 +59,7 @@ public class playerController : MonoBehaviour
 				crouch = true;
 			} 
 
-			else if (Input.GetButtonUp("Crouch"))
+			if (Input.GetButtonUp("Crouch"))
 			{
 				crouch = false;
 			}
@@ -91,6 +96,22 @@ public class playerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+		if (m_wasCrouching && !crouch)
+		{
+			if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
+			{
+				Debug.Log("KEJEDOT");
+
+				crouch = true;
+				forcedCrouch = true;
+			} 
+		}
+
+		if (forcedCrouch && !Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround)){
+			forcedCrouch = false;
+			crouch = false;
+		}
+
 		Move(horizontalInput * Time.deltaTime, crouch, jump);
 
         jump = false;
@@ -110,14 +131,6 @@ public class playerController : MonoBehaviour
 
 	public void Move(float move, bool crouch, bool jump)
 	{
-		if (crouch)
-		{
-			if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
-			{
-				crouch = true;
-			}
-		}
-	
 		if (Grounded || AirControl)
 		{
 			if (crouch)
@@ -142,7 +155,7 @@ public class playerController : MonoBehaviour
 					m_CrouchDisableCollider.enabled = true;
 				}
 				
-				if (m_wasCrouching)
+				if (m_wasCrouching && !forcedCrouch)
 				{
 					m_wasCrouching = false;
 				}
@@ -177,7 +190,6 @@ public class playerController : MonoBehaviour
 			}
 				
 		}
-        
 	}
 
 

@@ -13,40 +13,40 @@ Gothic Platformer is a side scrolling platformer with the theme of fantasy medie
 ## 🎮 DOWNLOAD
 Itch.io : https://hazzelnat.itch.io/gothic-platformer
 
-## 📋 Project Info
+## 📋 PROJECT INFO
 This project using Unity [Version]
 
 | **Role** | **Name** | **Development Time** 
 |:-|:-|:-|
 | Game Programmer | Hazzel Nathaniel Wu | 7 Days |
 
-##  📜Scripts and Features
+##  📜 FEATURES
 
 - Change of jump heights with crouch.
 
 |  Script       | Description                                                  |
 | ------------------- | ------------------------------------------------------------ |
-| `GameManager.cs` | Manages the game flow such as timers, difficulty levels, networking, etc. |
-| CheckPointManager.cs | Handles the location and management of checkpoints in the game. |
-| `SaturationChanger.cs`  | Controls the saturation levels of the 3D environment via post-processing. |
-| `UIHandler.cs`  | Manages various UI elements and organizes them into sequences. |
+| `GameManager.cs` | Manages the game flow such as checkpoint, level, and file save|
+| `PlayerControler.cs` | Manages the character movement, such as running, crouching, jumping |
 | `etc`  | |
 
-## 📂Files description
+## 📂 FILES DESCRIPTION
 
 ```
-├── Gothic Platformer                      # In this Folder, containing all the Unity project files, to be opened by a Unity Editor
+├── Gothic Platformer                  # In this Folder, containing all the Unity project files, to be opened by a Unity Editor
    ├── ...
-   ├── Assets                         #  In this Folder, it contains all our code, assets, scenes, etcwas not automatically created by Unity
-      ├── ...
-      ├── 3rdParty                   # In this folder, there are several packages that you must add via Unity Package Manager
-      ├── Scenes                     # In this folder, there are scenes. You can open these scenes to play the game via Unity
+   
+   ├── Assets                            # In this folder contains all our code, assets, scenes, etc
+      ├── Assets                            # In this folder contains all sprites used for this game
+      ├── Scenes                            # In this folder, there are scenes. You can open these scenes to play the game via Unity
+      ├── Material                          # In this folder contains physics material
+      ├── Scripts                           # In this folder, there are scripts used for GameObjects, Game Manager (Level, etc), and UI
       ├── ....
    ├── ...
       
 ```
 
-## 🕹️Game controls
+## 🕹️ GAME CONTROLS
 
 The following controls are bound in-game, for gameplay and testing.
 

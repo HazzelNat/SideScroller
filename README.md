@@ -11,7 +11,7 @@ Gothic Platformer is a side scrolling platformer with the theme of fantasy medie
 <img src="https://github.com/HazzelNat/SideScroller/blob/main/SideScroller.gif" alt="1" style="width:100%;height:auto;">
 
 ## 🎮 DOWNLOAD
-Itch.io : https://hazzelnat.itch.io/gothic-platformer
+Itch.io : [https://hazzelnat.itch.io/gothic-platformer](https://hazzelnat.itch.io/gothic-platformer)
 
 ## 📋 PROJECT INFO
 This project using Unity 2022.3.22f1

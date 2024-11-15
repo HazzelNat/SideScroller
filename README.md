@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="100%" alt="GothicPlatformer" src="">  <!--FOTO-->
+  <img width="100%" alt="GothicPlatformer" src="https://github.com/HazzelNat/SideScroller/blob/main/Screenshot%202024-11-15%20103158.png">  <!--FOTO-->
   </br>
 </p>
 
@@ -8,7 +8,7 @@
 Gothic Platformer is a side scrolling platformer with the theme of fantasy medieval time. You play as a knight stranded in enemy teritory. The main objective is to run to the end while avoiding death from the deadly environment or supernatural monsters.
 
 ## 🎥 GAMEPLAY
-<img src="" alt="1" style="width:50%;height:auto;">
+<img src="https://github.com/HazzelNat/SideScroller/blob/main/SideScroller.gif" alt="1" style="width:50%;height:auto;">
 
 ## 🎮 DOWNLOAD
 Itch.io : https://hazzelnat.itch.io/gothic-platformer
